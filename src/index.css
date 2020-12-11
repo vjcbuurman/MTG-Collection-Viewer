@@ -1,13 +1,260 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* todo:
+color-selector relative to search-engine width... */
+/* TODO */
+/* Dit is veel to complex aan het worden, beter alternatief voor verzinnen... */
+
+:root {
+  --standard-margin: 7px;
+  --search-engine-width: 400px;
+  --search-results-width: calc(100% - var(--search-engine-width) - 2 * var(--standard-margin));
+  --coloroption-filter-size: 60px;
+  --color-box-size: calc((var(--search-engine-width) - 10 * var(--standard-margin) - var(--coloroption-filter-size))/6);
+  --rarity-box-width: calc((var(--search-engine-width) - 7 * var(--standard-margin))/4);
+  --rarity-box-height: calc(0.2 * var(--rarity-box-width));
+  --numeric-input-height: 30px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.mtg-app {
+  height: 100%;
+  width: 100%;
+  background-repeat: repeat;
+}
+
+.search-engine {
+  width: var(--search-engine-width);
+  height: 2000px;
+  /* height: 100%; */
+  /* border: 1px solid #999; */
+  background: rgb(22, 18, 32);
+  float: left;
+}
+
+.search-results{
+  width: var(--search-results-width);
+  border: 1px solid #999;
+  background: lightcyan;
+  float: right;
+}
+
+.search-bar {
+  float: left;
+  margin: var(--standard-margin);
+}
+
+.search-button {
+  float: right;
+  margin: var(--standard-margin);
+}
+
+.color-box {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: calc(0.5 * var(--color-box-size));
+  font-weight: bold;
+  line-height: var(--color-box-size);
+  height: var(--color-box-size);
+  width: var(--color-box-size);
+  margin-top: var(--standard-margin);
+  margin-left: var(--standard-margin);
+  padding: 0;
+  text-align: center;
+  user-select: none;
+}
+
+.color-box:hover {
+  background-color: grey;
+}
+
+.color-selector {
+  border: 1px solid #999;
+  width: calc(100% - 2 * var(--standard-margin));
+  height: calc(var(--color-box-size) + 2 * var(--standard-margin));
+  margin-left: var(--standard-margin);
+  margin-bottom: var(--standard-margin);
+  clear: both;
+  float: left;
+  background: gold;
+}
+
+/* TODO: fixen, waarom is deze box hoger?
+als <button ipv <div, wel gelijk... */
+.colorfilter-selector {
+  background: #fff;
+  border: 1px solid #999;
+  float: center;
+  font-size: calc(0.5 * var(--color-box-size));
+  font-weight: bold;
+  line-height: var(--color-box-size);
+  height: var(--color-box-size);
+  width: calc(100% - 6 * var(--color-box-size) - 8.5 * var(--standard-margin));
+  margin: var(--standard-margin);
+  text-align: center;
+  user-select: none;
+  float: left;
+  font-family: Helvetica;
+}
+
+.colorfilter-selector:hover {
+  background-color: grey;
+}
+
+.colorfilter-choices{
+  background: grey;
+  border: 2px solid rgb(0, 0, 0);
+  height: calc(0.9* (4 * var(--color-box-size) + 5 * var(--standard-margin)));
+  width: calc(0.9 * var(--coloroption-filter-size));
+  position: relative;
+  z-index: 100; 
+  user-select: none;
+  font-family: Helvetica;
+}
+
+/* todo 0.9* var maken */
+.colorfilter-item {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: calc(0.9 * 0.5 * var(--color-box-size));
+  font-weight: bold;
+  line-height: calc(0.9 * var(--color-box-size));
+  height: calc(0.9 * var(--color-box-size));
+  width: calc(0.9 * var(--coloroption-filter-size));
+  margin-top: calc(0.9 * var(--standard-margin));
+  /* margin-left: calc(0.9 * var(--standard-margin)); */
+  text-align: center;
+}
+
+.colorfilter-item:hover {
+  background-color: grey;
+}
+
+.search-box {
+  background-color: grey;
+  margin-bottom: var(--standard-margin);
+  height: calc(3*var(--standard-margin) + var(--rarity-box-height) + 40px);
+  width: calc(90% - 2 * var(var(--standard-margin)));
+  margin: var(--standard-margin);
+  /* width: 40px; */
+}
+
+.rarity-box {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: calc(0.6 * var(--rarity-box-height));
+  font-weight: bold;
+  line-height: var(--rarity-box-height);
+  height: var(--rarity-box-height);
+  width: var(--rarity-box-width);
+  margin-top: var(--standard-margin);
+  margin-left: var(--standard-margin);
+  /* padding: 0; */
+  text-align: center;
+  font-family: Helvetica;
+}
+
+.rarity-box:hover {
+  background-color: grey;
+}
+
+.rarity-selector {
+  border: 1px solid #999;
+  /* height: calc(2*var(--color-box-margin) + var(--color-box-size));
+  width: calc(6*var(--color-box-margin) + 5 * var(--color-box-size)); */
+  width: calc(100% - 2 * var(--standard-margin));
+  height: calc(var(--rarity-box-height) + 2 * var(--standard-margin));
+  margin: var(--standard-margin);
+  clear: both;
+  background: rgba(255, 0, 0, 0.404);
+}
+
+.bucket-selector {
+  border: 1px solid #999;
+  /* height: calc(2*var(--color-box-margin) + var(--color-box-size));
+  width: calc(6*var(--color-box-margin) + 5 * var(--color-box-size)); */
+  width: calc(100% - 2 * var(--standard-margin));
+  height: calc(var(--rarity-box-height) + 2 * var(--standard-margin));
+  margin: var(--standard-margin);
+  clear: both;
+  background: rgba(255, 0, 0, 0.404);
+}
+
+.bucket-box {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: calc(0.6 * var(--rarity-box-height));
+  font-weight: bold;
+  line-height: var(--rarity-box-height);
+  height: var(--rarity-box-height);
+  width: calc((100% - 5 * var(--standard-margin))/4);
+  /* width: 40px; */
+  margin-top: var(--standard-margin);
+  margin-left: var(--standard-margin);
+  /* padding: 0; */
+  text-align: center;
+  font-family: Helvetica;
+}
+
+.bucket-box:hover {
+  background-color: grey;
+}
+
+.dropdown-menu {
+  /* width: calc(max(500px, 50%)); */
+  width: calc(100% - 2 * var(--standard-margin));
+  margin-top: var(--standard-margin);
+  margin-left: var(--standard-margin);
+  clear: both;
+  display: block;
+  border: 1px solid #999;
+  background: grey;
+  /* font-family: Helvetica; */
+}
+
+.dropdown-item {
+  width: 100%;
+  /* font-family: Helvetica; */
+}
+
+.card-image {
+  float: left;
+  margin-top: var(--standard-margin);
+  margin-left: var(--standard-margin);
+}
+
+.numeric-selector {
+  border: 1px solid #999;
+  /* height: calc(2*var(--color-box-margin) + var(--color-box-size));
+  width: calc(6*var(--color-box-margin) + 5 * var(--color-box-size)); */
+  width: calc(100% - 2 * var(--standard-margin));
+  height: calc(var(--numeric-input-height) + 2 * var(--standard-margin));
+  margin-top: var(--standard-margin);
+  margin-left: var(--standard-margin);
+  clear: both;
+  background: rgba(255, 0, 0, 0.404);
+}
+
+.numeric-input {
+  width: 100px;
+  height: var(--numeric-input-height);
+  float: left;
+  margin-left: var(--standard-margin);
+  margin-top: var(--standard-margin);
+}
+
+.numeric-toggle {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: calc(0.6 * var(--numeric-input-height));
+  font-weight: bold;
+  line-height: var(--numeric-input-height);
+  height: var(--numeric-input-height);
+  width: 40px;
+  margin-top: var(--standard-margin);
+  margin-left: var(--standard-margin);
+  /* padding: 0; */
+  text-align: center;
 }
