@@ -15,20 +15,54 @@ function Imagepath(card_id) {
 // https://stackoverflow.com/questions/14263594/how-to-show-text-on-image-when-hovering
 // cardsize slider
 // click to flip card (if possible?)
-function Cardimagewrapper({card_id, count}) {
+function Cardimagewrapper({card_id, card_info}) {
+    // const [clicked, setClicked] = useState(false);
+
     const full_image_path = Imagepath(card_id)
     return (
-        <div>
+        <div className = "card-image-wrapper">
             <img
                 className = "card-image"
-                height = "300px"
+                // height = "300px"
                 src = {full_image_path}
                 alt = {card_id + " not available"}
-                title = {"Count: " + count}
+
             />
+                {/* TODO:
+                make below pretty...
+                reactjs native solution instead of css solution
+                possibly onClick, instead of onMouseover
+                e.g. onClick show text thingy with cardimage as background? */}
+            <div
+                className="card-image-description"
+            >
+                <p>
+                    Count: {card_info['count']}
+                </p>
+                <p>
+                    Used: {card_info['used']}
+                </p>
+                <p>
+                    Foil: {card_info['foil']}
+                </p>
+                <p>
+                    Used (foil): {card_info['used (foil)']}
+                </p>
+                <p>
+                    Used in: {card_info['used in'].join(", ")}
+                </p>
+                <p>
+                    Used in (foil): {card_info['used (foil) in'].join(", ")}
+                </p>
+                {/* {JSON.stringify(card_info)} */}
+                
+            </div>
         </div>
     )
 }
+
+
+
 
 // TODO:
 // add option to choose max number of results?
@@ -67,7 +101,7 @@ class Searchresult extends React.Component {
                                 <Cardimagewrapper
                                     key = {card_id}
                                     card_id = {card_id}
-                                    count = {collection_info[card_id].count}
+                                    card_info = {collection_info[card_id]}
                                 />
                             )
                         })}

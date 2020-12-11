@@ -8,6 +8,7 @@ class RangeSelector extends React.Component {
             <div
                 className = {this.props.range_selector_classname}
             >
+                {this.props.name}
                 <button
                     className = {this.props.toggle_classname}
                     onClick = {() => this.props.toggleOn()} // toggleBool is passed

@@ -12,6 +12,8 @@ color-selector relative to search-engine width... */
   --rarity-box-width: calc((var(--search-engine-width) - 7 * var(--standard-margin))/4);
   --rarity-box-height: calc(0.2 * var(--rarity-box-width));
   --numeric-input-height: 30px;
+  --card-height: 300px;
+  --card-width: calc(var(--card-height) / 88.9 * 63.5);
 }
 
 .mtg-app {
@@ -218,11 +220,60 @@ als <button ipv <div, wel gelijk... */
   /* font-family: Helvetica; */
 }
 
+
+
+
+
+
+
+/* card image stuff */
+
 .card-image {
-  float: left;
-  margin-top: var(--standard-margin);
-  margin-left: var(--standard-margin);
+  position: absolute;
+  height: var(--card-height);
+  width: var(--card-width);
+  /* float: left; */
+  /* margin-top: var(--standard-margin); */
+  /* margin-left: var(--standard-margin); */
 }
+
+.card-image-wrapper {
+  float: left;
+  /* margin-top: var(--standard-margin); */
+  /* margin-left: var(--standard-margin); */
+  height: var(--card-height);
+  width: var(--card-width);
+  margin-left: var(--standard-margin);
+  margin-top: var(--standard-margin);
+}
+
+.card-image-description {
+  position: absolute;
+  margin-left: calc(0.05 * var(--card-height));
+  margin-top: calc(0.05 * var(--card-height));
+  height: calc(0.9 * var(--card-height));
+  width: calc(0.9 * var(--card-width));
+  background: rgba(211, 211, 211, 0.72);
+  color: rgb(0, 0, 0);
+  font-family: Helvetica;
+  visibility: hidden;
+  opacity: 0;
+  text-align: center;
+  /* transition effect. not necessary */
+  /* transition: opacity .2s, visibility .2s; */
+}
+
+.card-image-wrapper:hover .card-image-description {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+
+
+
+
+
 
 .numeric-selector {
   border: 1px solid #999;

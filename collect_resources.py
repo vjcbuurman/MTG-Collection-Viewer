@@ -1,6 +1,6 @@
 import requests
 import util
-from util import card_id, read_collection, download_file, image_filename, create_global_indices, make_prices_overview
+from util import card_id, read_decks, read_collection, download_file, image_filename, create_global_indices, make_prices_overview
 import json
 import time
 import glob
@@ -12,6 +12,7 @@ from pprint import pprint
 # set some global variables
 redirect_key = "faces_redirect"
 collectionfiles_dir = "E:\\Dropbox\\mtg_collection_files\\"
+deckfiles_dir = "E:\\Dropbox\\mtg_collection\\decks\\"
 
 # get uri and request info for bulk data set from scryfall.
 # can basically be replaced with any bulk set
@@ -37,12 +38,14 @@ carddata = requests.get(
 
 card_index, cardname_to_id, setcodes = create_global_indices(carddata, redirect_key)
 
+decks = read_decks(deckfiles_dir, card_index, setcodes, cardname_to_id, redirect_key)
+
 # export overal card_index, mainly for build_indices script
 with open(os.path.join("src", "data", "card_index.json"), "w") as f:
     json.dump(card_index, f)
 
 # make collection from collection files
-collection = read_collection(collectionfiles_dir, card_index, setcodes, cardname_to_id, redirect_key)
+collection = read_collection(collectionfiles_dir, card_index, setcodes, cardname_to_id, redirect_key, decks)
 with open(os.path.join("src", "data", "collection.json"), "w") as f:
     json.dump(collection, f)
 

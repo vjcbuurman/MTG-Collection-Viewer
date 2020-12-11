@@ -146,12 +146,8 @@ class Searchengine extends React.Component {
         const search_terms = this.state.search_term.toLowerCase().split(" ")
         console.log("Search terms array: ")
         console.log(search_terms)
+        // search results is an intersection of the list of search terms as a result of splitting the search string based on spaces
         const searchterm_results = intersection_list(search_terms.map((search_term) => Searchterm(search_term, searchtarget_state)));
-
-        // op dit niveau splitsen op spaties
-        // lijst maken met resultaten
-        // intersection gebruiken om searchterm_results te produceren
-        // const searchterm_results = Searchterm(this.state.search_term, searchtarget_state) // NB: searchtarget_state is used for a union!
         console.log("Results through search: ")
         console.log(searchterm_results)
 
@@ -236,6 +232,7 @@ class Searchengine extends React.Component {
             <RangeSelector
                 range_selector_classname = "numeric-selector"
                 toggle_classname = 'numeric-toggle'
+                name = "CMC"
                 isOn = {() => this.state["cmc_filter"]}
                 toggleOn = {() => this.toggleStatebool("cmc_filter")}
                 minValue = {() => this.state["cmc_min"]}

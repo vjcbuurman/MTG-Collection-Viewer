@@ -21,7 +21,6 @@ for card_id in collection:
     KEYWORDS.update(set([x.lower() for x in card_index[card_id]['keywords']]))
 KEYWORDS_PATTERN = re.compile('|'.join(list(KEYWORDS)))
 
-
 # todo:
 # oracle text index (possibly just keywords?) (from catalogs!)
 
@@ -52,6 +51,16 @@ for card_id in collection:
     while i <= card_name_length:
         name_index.setdefault(card_name[:i], list()).append(card_id)
         i += 1
+    # also per word indexing:
+    # this makes it possible to search for Tower (to find Command Tower)
+    # also makes it easier to isolate Command Tower
+    # by using AND search for the, in the app, considered seperate search terms 'Command' AND 'Tower'
+    for word in re.findall(r"[\w]+", card_name):
+        word_length = len(word)
+        i = min(word_length, 4) # start indexing with 4 characters, or less if cardname is shorter (e.g Opt)
+        while i <= word_length:
+            name_index.setdefault(word[:i], list()).append(card_id)
+            i += 1
     rarity_index.setdefault(card['rarity'].lower(), list()).append(card_id)
     for play_format in card['legalities']:
         if card['legalities'][play_format] == "legal":
