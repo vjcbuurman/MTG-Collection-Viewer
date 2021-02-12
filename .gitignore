@@ -1,5 +1,12 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+collection_files/*
+deck_files/*
+src/data/*
+*.html
+public/images
+
+# NPM stuff:
 # dependencies
 /node_modules
 /.pnp

@@ -11,8 +11,8 @@ from pprint import pprint
 
 # set some global variables
 redirect_key = "faces_redirect"
-collectionfiles_dir = "E:\\Dropbox\\mtg_collection_files\\"
-deckfiles_dir = "E:\\Dropbox\\mtg_collection\\decks\\"
+collectionfiles_dir = "collection_files"
+deckfiles_dir = "deck_files"
 
 # get uri and request info for bulk data set from scryfall.
 # can basically be replaced with any bulk set
