@@ -33,8 +33,8 @@
 * `python -m pip install stop_words`
 * `python -m pip install pandas`
 6. Navigate into the app folder using `cd mtg_collection_viewer`
-1. Clone this repository into that folder using:
-* First, remove the existing `.git` folder. Then, in `cmd`:
+7. Remove the existing `.git` folder. E.g. using `rmdir .git` in `cmd`.
+1. Now add this repository into your `mtg_collection_viewer` folder using:
 * `git init`
 * `git remote add origin https://github.com/vjcbuurman/MTG-Collection-Viewer.git`
 * `git fetch`
