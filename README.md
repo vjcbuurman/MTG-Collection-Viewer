@@ -40,7 +40,7 @@
 * `git fetch`
 * `git checkout -f master`
 
-You now have all the necessary tools to make the database based on your own card collection, build and run the app.
+You now have all the necessary tools to make the database based on your own card collection, build and run the app. Updates can in the future simply be collected via a `git pull` through `cmd` (when inside the `mtg_collection_viewer` folder).
 
 ### Resource creation
 
