@@ -33,7 +33,12 @@
 * `python -m pip install stop_words`
 * `python -m pip install pandas`
 6. Navigate into the app folder using `cd mtg_collection_viewer`
-1. Clone this repository into that folder using `git clone https://github.com/vjcbuurman/MTG-Collection-Viewer.git`
+1. Clone this repository into that folder using:
+* First, remove the existing `.git` folder. Then, in `cmd`:
+* `git init`
+* `git remote add origin https://github.com/vjcbuurman/MTG-Collection-Viewer.git`
+* `git fetch`
+* `git checkout -f master`
 
 You now have all the necessary tools to make the database based on your own card collection, build and run the app.
 
