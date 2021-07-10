@@ -1,18 +1,21 @@
+from re import sub
 import requests
-import util
 from util import card_id, read_decks, read_collection, download_file, image_filename, create_global_indices, make_prices_overview
 import json
 import time
 import glob
 import os
 import tqdm
-import pandas
 from pprint import pprint
 
 # set some global variables
 redirect_key = "faces_redirect"
-collectionfiles_dir = "collection_files"
-deckfiles_dir = "deck_files"
+
+# read config for location of collection and deck files
+with open("config.json") as f:
+    config = json.load(f)
+collectionfiles_dir = config['collectionfiles_dir']
+deckfiles_dir = config['deckfiles_dir']
 
 # get uri and request info for bulk data set from scryfall.
 # can basically be replaced with any bulk set
@@ -28,6 +31,29 @@ carddata = requests.get(
         "Content-Type" : data_info["content_type"],
         "Content-Encoding" : data_info["content_encoding"]}
 ).json()
+
+# create sub/super type indices
+
+creature_types = requests.get("https://api.scryfall.com/catalog/creature-types").json()['data']
+planeswalker_types = requests.get("https://api.scryfall.com/catalog/planeswalker-types").json()['data']
+land_types = requests.get("https://api.scryfall.com/catalog/land-types").json()['data']
+artifact_types = requests.get("https://api.scryfall.com/catalog/artifact-types").json()['data']
+enchantment_types = requests.get("https://api.scryfall.com/catalog/enchantment-types").json()['data']
+spell_types = requests.get("https://api.scryfall.com/catalog/spell-types").json()['data']
+sub_types = creature_types + planeswalker_types + land_types + \
+    artifact_types + enchantment_types + spell_types
+
+super_types = [
+    "Artifact", "Conspiracy", "Creature", "Emblem", "Enchantment", "Hero", "Instant",
+    "Land", "Phenomenon", "Plane", "Planeswalker", "Scheme", "Sorcery", "Tribal", "Vanguard",
+    "Legendary"
+]
+
+with open(os.path.join("src", "data", "sub_types.json"), "w") as f:
+    json.dump(sub_types, f)
+with open(os.path.join("src", "data", "super_types.json"), "w") as f:
+    json.dump(super_types, f)
+
 
 # create full card index
 # simply maps card_ids to info about that card

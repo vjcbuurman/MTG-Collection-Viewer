@@ -15,7 +15,7 @@ with open(os.path.join("src", "data", "sub_types.json")) as f:
 with open(os.path.join("src", "data", "collection.json")) as f:
     collection = json.load(f)
 
-# before we start we collect all keywords, to exclude those from cardtext search
+# before we start: collect all keywords, to exclude those from cardtext search
 KEYWORDS = set()
 for card_id in collection:
     KEYWORDS.update(set([x.lower() for x in card_index[card_id]['keywords']]))
@@ -121,6 +121,8 @@ with open(os.path.join("src","data","supertype_index.json"), "w") as f:
     json.dump(supertype_index, f)
 with open(os.path.join("src","data","subtype_index.json"), "w") as f:
     json.dump(subtype_index, f)
+with open(os.path.join("src","data","set_index.json"), "w") as f:
+    json.dump(set_index, f)
 
 # dump all card_ids for termless 'search' (e.g. to get all blue legendary creatures, without matching for a search term)
 with open(os.path.join("src", "data", "all_card_ids.json"), "w") as f:

@@ -11,18 +11,6 @@ export function union(setA, setB) {
     return _union
 }
 
-export function intersection(setA, setB) {
-    let _intersection = new Set()
-    for (let elem of setB) {
-        if (setA.has(elem)) {
-            _intersection.add(elem)
-        }
-    }
-    return _intersection
-}
-
-// todo: union_list niet gebruikt
-// intersection_list werkt niet
 export function union_list(sets) {
     let _union = new Set()
     for (let set of sets) {
@@ -33,23 +21,27 @@ export function union_list(sets) {
     return _union
 }
 
+export function intersection(setA, setB) {
+    let _intersection = new Set()
+    for (let elem of setB) {
+        if (setA.has(elem)) {
+            _intersection.add(elem)
+        }
+    }
+    return _intersection
+}
+
 export function intersection_list(sets) {
     console.log("Entering intersection with sets: ")
     console.log(sets)
-    if (sets.length === 1) {
+    if (sets.length === 0) {
+        return new Set()
+    } else if (sets.length === 1) {
         return sets[0]
+    } else if (sets.length === 2){
+        return intersection(sets[0], sets[1])
     } else {
-        let start_intersection = new Set(sets[0])
-        for (let set of sets.slice(1)) {
-            var _intersection = new Set()
-            for (let elem of set) {
-                if (start_intersection.has(elem)) {
-                    _intersection.add(elem)
-                }
-            }
-            start_intersection = new Set(_intersection)
-        }
-        return _intersection
+        return intersection(sets[0], intersection_list(sets.slice(1)))
     }
 }
 

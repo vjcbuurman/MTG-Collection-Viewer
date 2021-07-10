@@ -6,14 +6,23 @@
 * pagineren van resultaten -> stap 1, simpelweg max X resultaten tonen
 * constant updaten van zoekresultaten?
 * responsive viewer -> soort van af
-* indices maken
-* zoekfunctionaliteit maken
+* indices afmaken
+* zoekfunctionaliteit afmaken
 * geen images voor signed versies van kaarten
+* organization.json inbouwen, zodat je ook direct kan zien in welke doos een kaart zit
 
 ## Instructions
 
 * You need Python and some packages: used to build the 'database' that is used by the react app
 * You need NPM and some packages: used to build and serve the app itself
+* You need to make a file called `config.json` that lists where the collection and deck files are stored. It should have the following structure:
+
+```{json}
+{
+    "collectionfiles_dir": "dir/to/collectionfiles",
+    "deckfiles_dir": "dir/to/deckfiles"
+}
+```
 
 ### Installation
 
@@ -30,8 +39,7 @@
 * `npm install react-numeric-input --save`
 * `npm install -g serve`
 * `npx create-react-app mtg_collection_viewer`
-* `python -m pip install stop_words`
-* `python -m pip install pandas`
+* `python -m pip install -r requirements.txt`
 6. Navigate into the app folder using `cd mtg_collection_viewer`
 1. Clone this repository into that folder using `git clone https://github.com/vjcbuurman/MTG-Collection-Viewer.git`
 

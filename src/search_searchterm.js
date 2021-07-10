@@ -3,13 +3,15 @@ import json_subtype_index from './data/subtype_index.json';
 import json_keyword_index from './data/keyword_index.json';
 import json_name_index from './data/name_index.json';
 import json_cardtext_index from './data/cardtext_index.json';
+import json_set_index from './data/set_index.json';
 
-import { union_list } from './set_operators'
-import cardid_to_name from './data/cardid_to_name.json'
-
+import { union_list } from './set_operators';
+import { get_value } from './util';
+import cardid_to_name from './data/cardid_to_name.json';
 
 const ALL_IDS = new Set(Object.keys(cardid_to_name))
 
+// convert all json's into native Maps
 const keyword_index = new Map()
 Object.keys(json_keyword_index).forEach((key) => {
     keyword_index.set(key, new Set(json_keyword_index[key]))
@@ -31,18 +33,17 @@ Object.keys(json_cardtext_index).forEach((key) => {
     cardtext_index.set(key, new Set(json_cardtext_index[key]))
 })
 
-function get_value(index, key){
-    console.log("looking in index for key")
-    console.log(index.has(key))
-    if (index.has(key)) {
-        return index.get(key)
-    } else {
-        return new Set()
-    }
-}
+const set_keys = new Set()
+Object.keys(json_set_index).forEach((key) => {
+    set_keys.add(key)
+})
+console.log(set_keys)
 
+// TODO:
+// set_keys.has() hieruit verwijderen en zorgen dat 
+// setcodes uberhaupt niet deze functie in gaan
 function Searchterm(search_term, searchtarget_state) {
-    if (search_term === ""){
+    if (search_term === "" || set_keys.has(search_term)){
         return ( ALL_IDS )
     } else {
         return ( union_list([

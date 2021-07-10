@@ -4,8 +4,9 @@ import Searchterm from './search_searchterm';
 import ColorFilter from './search_filter_color';
 import RarityFilter from './search_filter_rarity';
 import Selector from './box_selector';
-import RangeSelector from './range_selector'
-import { intersection_list } from './set_operators'
+import RangeSelector from './range_selector';
+import { intersection_list } from './set_operators';
+import Setcode from './search_setcode';
 
 // TODO
 // Oversized uit indices verwijderen? Verneuken de output...
@@ -129,13 +130,7 @@ class Searchengine extends React.Component {
     search() {
         // TODO:
         // verschillende zoekdingen in functies opdelen?
-
-        // TODO:
-        // search term opsplitsen op basis van spatie en intersecties/verenigingen uitvoeren op basis van termen
         
-        // TODO:
-        // boxen aan searchengine toevoegen om zoeken op deze zaken aan/uit te zetten
-
         // TODO:
         // alles tolower()?
 
@@ -147,10 +142,21 @@ class Searchengine extends React.Component {
         console.log("Search terms array: ")
         console.log(search_terms)
         // search results is an intersection of the list of search terms as a result of splitting the search string based on spaces
-        const searchterm_results = intersection_list(search_terms.map((search_term) => Searchterm(search_term, searchtarget_state)));
+        const term_results = intersection_list(search_terms.map((search_term) => Searchterm(search_term, searchtarget_state)));
+        console.log("Results through terms: ")
+        console.log(term_results)
+
+        // Setcode search (will perform as filter)
+        // todo: setcodes worden nu in Searchterm() gefiltered,
+        // maar moeten eigenlijk op dit level gefilterd worden.
+
+        const set_resuls = Setcode(search_terms);
+        console.log("Results through matching with sets: ")
+        console.log(set_resuls)
+
+        const searchterm_results = intersection_list([term_results, set_resuls])
         console.log("Results through search: ")
         console.log(searchterm_results)
-
 
         // Color filter
         var color_state = {}

@@ -193,6 +193,17 @@ def read_collection(collectionfiles_dir: str, card_index: dict, setcodes: set, c
     return collection
 
 
+def card_entry(cardinfo):
+    return {
+        'set': cardinfo['set'],
+        'name': cardinfo['name'],
+        'cardnumber': cardinfo['collector_number'],
+        'color': '/'.join(cardinfo.get('color_identity', [])),
+        'rarity': cardinfo.get('rarity', 'UNKNOWN'),
+        'type': cardinfo.get('type_line', 'UNKNOWN')
+        # 'decks' : ' / '.join(list(set(collection[(setcode, cardnumber, foil)]['used in decks'])))
+    }
+
 def make_prices_overview(collection: dict, card_index: dict):
 
     def card_price(cardinfo, foil: bool):
@@ -208,33 +219,25 @@ def make_prices_overview(collection: dict, card_index: dict):
     cards = list()
     for card_id in collection:
             cardinfo = card_index[card_id]
-            setcode = cardinfo['set']
-            cardnumber = cardinfo['collector_number']
-            cardname = cardinfo['name']
-
-            card_entry = {
-                    'set': setcode,
-                    'name': cardname,
-                    'cardnumber': cardnumber,
-                    'color': '/'.join(cardinfo.get('color_identity', [])),
-                    'rarity': cardinfo.get('rarity', 'UNKNOWN'),
-                    'type': cardinfo.get('type_line', 'UNKNOWN')
-                    # 'decks' : ' / '.join(list(set(collection[(setcode, cardnumber, foil)]['used in decks'])))
-                }
+            card_count = collection[card_id]['count']
+            foil_count = collection[card_id]['foil']
+            if foil_count > 0:
+                new_entry = card_entry(cardinfo)
+                new_entry['foil'] = True
+                new_entry['price'] = card_price(cardinfo, True)
+                new_entry['count'] = foil_count
+                cards.append(new_entry)
+                card_count -= foil_count
+            if card_count > 0:
+                new_entry = card_entry(cardinfo)
+                new_entry['foil'] = False
+                new_entry['price'] = card_price(cardinfo, False)
+                new_entry['count'] = card_count
+                cards.append(new_entry)
             
-            if (collection[card_id]['count'] - collection[card_id]['foil']) > 0:
-                card_entry['foil'] = False
-                card_entry['price'] = card_price(cardinfo, False)
-                card_entry['count'] = collection[card_id]['count'] - collection[card_id]['foil']
-                cards.append(card_entry)
-            if collection[card_id]['foil'] > 0:
-                card_entry['foil'] = True
-                card_entry['price'] = card_price(cardinfo, True)
-                card_entry['count'] = collection[card_id]['foil']
-                cards.append(card_entry)
     cards.sort(key = lambda x : x['price'], reverse = True)
     # make df and export to excel
     df = pandas.DataFrame(cards)
-    df.to_excel("prices_overview.xlsx", index = False)
+    df.to_excel("prices_overview.xlsx", index = False, engine="xlsxwriter")
 
 
