@@ -41,9 +41,14 @@
 * `npx create-react-app mtg_collection_viewer`
 * `python -m pip install -r requirements.txt`
 6. Navigate into the app folder using `cd mtg_collection_viewer`
-1. Clone this repository into that folder using `git clone https://github.com/vjcbuurman/MTG-Collection-Viewer.git`
+7. Remove the existing `.git` folder. E.g. using `rmdir .git` in `cmd`.
+1. Now add this repository into your `mtg_collection_viewer` folder using:
+* `git init`
+* `git remote add origin https://github.com/vjcbuurman/MTG-Collection-Viewer.git`
+* `git fetch`
+* `git checkout -f master`
 
-You now have all the necessary tools to make the database based on your own card collection, build and run the app.
+You now have all the necessary tools to make the database based on your own card collection, build and run the app. Updates can in the future simply be collected via a `git pull` through `cmd` (when inside the `mtg_collection_viewer` folder).
 
 ### Resource creation
 
